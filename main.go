@@ -7,10 +7,10 @@ import (
 	"runtime/pprof"
 	"syscall"
 
-	"github.com/cloudfoundry-incubator/datadog-firehose-nozzle/datadogfirehosenozzle"
-	"github.com/cloudfoundry-incubator/datadog-firehose-nozzle/logger"
-	"github.com/cloudfoundry-incubator/datadog-firehose-nozzle/nozzleconfig"
-	"github.com/cloudfoundry-incubator/datadog-firehose-nozzle/uaatokenfetcher"
+	"github.com/rsamban/datadog-firehose-nozzle/datadogfirehosenozzle"
+	"github.com/rsamban/datadog-firehose-nozzle/logger"
+	"github.com/rsamban/datadog-firehose-nozzle/nozzleconfig"
+	"github.com/rsamban/datadog-firehose-nozzle/uaatokenfetcher"
 )
 
 const flushMinBytes uint32 = 1024

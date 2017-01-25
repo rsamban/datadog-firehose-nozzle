@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"sort"
 	"time"
+//	"os"
 
 	"errors"
 
@@ -102,12 +103,33 @@ func (c *Client) AlertSlowConsumerError() {
 
 func (c *Client) AddMetric(envelope *events.Envelope) {
 	c.totalMessagesReceived++
+/*
+	fileName := "/var/vcap/sys/log/datadog-firehose-nozzle/events.txt"
+	f, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, 0600)
+	if err != nil {
+    		panic(err)
+	}
+	defer f.Close()
+	if _, err = f.WriteString(envelope.GetEventType().String()+"::"); err != nil {
+    		panic(err)
+	}
+*/
 	if envelope.GetEventType() != events.Envelope_ValueMetric && envelope.GetEventType() != events.Envelope_CounterEvent {
 		if envelope.GetOrigin() != "bosh-hm-forwarder" {
 			return
 		}
 	}
-
+/*
+	var logText := ""
+	if envelope.GetEventType() == events.Envelope_ValueMetric {
+		logText = envelope.GetEventType().String()+"::"+envelope.GetOrigin()+"::"+msg.GetValueMetric().GetName()+"::"+msg.GetValueMetric().GetValue() 
+	} else {
+		logText = envelope.GetEventType().String()+"::"+envelope.GetOrigin()
+	}
+	if _, err = f.WriteString(logText+"\n"); err != nil {
+    		panic(err)
+	}
+*/
 	tags := parseTags(envelope)
 	key := MetricKey{
 		EventType: envelope.GetEventType(),
