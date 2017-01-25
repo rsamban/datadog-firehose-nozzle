@@ -103,7 +103,9 @@ func (c *Client) AlertSlowConsumerError() {
 func (c *Client) AddMetric(envelope *events.Envelope) {
 	c.totalMessagesReceived++
 	if envelope.GetEventType() != events.Envelope_ValueMetric && envelope.GetEventType() != events.Envelope_CounterEvent {
-		return
+		if envelope.GetOrigin() != "bosh-hm-forwarder" {
+			return
+		}
 	}
 
 	tags := parseTags(envelope)
